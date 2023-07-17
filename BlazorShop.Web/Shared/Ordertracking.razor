@@ -1,0 +1,143 @@
+﻿<div class="btn btn-lg" @onclick="()=> mudarStatus()">Click</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 hh-grayBox pt45 pb20">
+            <div class="row justify-content-between">
+                @if (_pedido.Status == "Aguardando Confimação")
+                {
+                    <div class="order-tracking completed ">
+                        <span class="is-complete lds-dual-ring bg-danger"></span>
+                        <p>Aguardando Confirmação<br><span>Mon, June 24</span></p>
+                    </div>
+                    <div class="order-tracking">
+                        <span class="is-complete "></span>
+                        <p>Em preparação<br><span>Tue, June 25</span></p>
+                    </div>
+                    <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>Saiu para Entrega<br><span>Fri, June 28</span></p>
+                    </div>
+                }
+                else if (_pedido.Status == "Em preparação")
+                {
+                    <div class="order-tracking completed ">
+                        <span class="is-complete "></span>
+                        <p>Aguardando Confirmação<br><span>Mon, June 24</span></p>
+                    </div>
+                    <div class="order-tracking completed">
+                        <span class="is-complete lds-dual-ring bg-danger"></span>
+                        <p>Em preparação<br><span>Tue, June 25</span></p>
+                    </div>
+                    <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>Saiu para Entrega<br><span>Fri, June 28</span></p>
+                    </div>
+                }
+               else if (_pedido.Status == "Saiu para Entrega")
+                {
+                    <div class="order-tracking completed ">
+                        <span class="is-complete "></span>
+                        <p>Aguardando Confirmação<br><span>Mon, June 24</span></p>
+                    </div>
+                    <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>Em preparação<br><span>Tue, June 25</span></p>
+                    </div>
+                    <div class="order-tracking completed">
+                        <span class="is-complete lds-dual-ring bg-danger"></span>
+                        <p>Saiu para Entrega<br><span>Fri, June 28</span></p>
+                    </div>
+                }
+                else if (_pedido.Status == "Entregue")
+                {
+                    <div class="order-tracking completed ">
+                        <span class="is-complete "></span>
+                        <p>Aguardando Confirmação<br><span>Mon, June 24</span></p>
+                    </div>
+                    <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>Em preparação<br><span>Tue, June 25</span></p>
+                    </div>
+                    <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>Entregue ao Cliente<br><span>Fri, June 28</span></p>
+                    </div>
+                   
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+    pedido _pedido = new pedido ();
+    int cont;
+    string txtStatus;
+    protected async override void OnInitialized()
+    {
+        cont = 1;
+        _pedido.Status = "Aguardando Confimação";
+        cont++;
+        return;
+    }
+
+    void mudarStatus()
+    {
+
+
+       
+        if (cont == 2)
+        {
+            _pedido.Status = "Em preparação";
+            cont++;
+            return;
+        }
+        if (cont == 3)
+        {
+            _pedido.Status = "Saiu para Entrega";
+            cont++;
+            return;
+        }
+        if (cont == 4)
+        {
+            _pedido.Status = "Entregue";
+            cont++;
+            return;
+        }
+        if (cont == 5)
+        {
+           
+
+            cont = 1;
+            _pedido.Status = "Aguardando Confimação";
+            cont++;
+
+
+            return;
+        }
+
+    }
+    public class pedido
+    {
+
+        public int IdPedido { get; set; }
+        public string Status { get; set; }
+
+         
+        
+        
+    
+
+
+    }
+
+}
+
+
+
+
+

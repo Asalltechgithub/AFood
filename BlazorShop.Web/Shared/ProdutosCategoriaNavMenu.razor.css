@@ -1,0 +1,17 @@
+﻿.tabs {
+    background-color:#03A9F4;
+    position:relative;
+    margin-bottom:20px;
+   
+}
+
+
+
+
+.tabs a {
+     display: inline-block;
+     padding:10px;
+     color:#FFF;
+     text-decoration:none;
+    
+}

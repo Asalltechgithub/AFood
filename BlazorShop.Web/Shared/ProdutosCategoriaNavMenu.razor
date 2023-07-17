@@ -1,0 +1,52 @@
+﻿@if (CategoriasDto == null && MensagemErro == null)
+{
+    <ExibirSpinner />
+}
+else if (MensagemErro != null)
+{
+    <ExibirErro MensagemErro="@MensagemErro" />
+}
+else
+{
+     <div id="tabs-demo" class="tabs">
+        @foreach (var categoria in CategoriasDto)
+        {
+
+
+
+            @*var link = "/ProdutosPorCategoria/" + categoria.Id;
+            <NavLink class="nav-link" href="@link">*@
+
+                <a class="@categoria.IconCSS" href="#@categoria.Nome"> @categoria.Nome </a>
+
+            @*</NavLink>*@
+
+
+
+
+            
+        }
+    </div>
+}
+
+
+@code {
+    [Inject]
+    public IProdutoService? ProdutoService { get; set; }
+
+    public IEnumerable<CategoriaDto>? CategoriasDto { get; set; }
+
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            CategoriasDto = await ProdutoService.GetCategorias();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
+}

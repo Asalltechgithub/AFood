@@ -1,0 +1,30 @@
+﻿@foreach (var items in Produtos)
+{
+
+ <table class="table w-100" style=" background-color:white; text-align:end;">
+        <thead class="table-light">
+        </thead>
+        <tbody class="w-100">
+            <tr style="background-color:white; width:100%" @onclick="() => navegar(items.Id)">
+                <td style="text-align:start;width:40%"> @items.Nome </td>
+                <td style="text-align:start;width:30%">   @items.Preco.ToString("c")</td>
+                <td style="text-align:end;"><img src="@items.ImagemUrl" style=" width:80px"></td>
+             </tr>
+        </tbody>
+    </table>
+
+    
+}
+
+@code {
+    [Inject]
+    private NavigationManager navigation { get; set; } 
+
+    [Parameter]
+    public IEnumerable<ProdutoDto>? Produtos { get; set; }
+
+    void navegar(int id)
+    {
+        navigation.NavigateTo("ProdutoDetalhes/"+id);
+    }
+}

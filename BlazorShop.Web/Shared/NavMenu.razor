@@ -1,0 +1,64 @@
+﻿@implements IDisposable
+@inject ICarrinhoCompraService carrinhoCompraService
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="/Imagens/Logo/Logo.png"width="100px" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="produto">
+                        <span class="oi oi-basket" aria-hidden="true"></span> Produtos
+                    </NavLink>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+       
+@*
+        <div class="nav-item px-3 d-sm-none">
+            <NavLink class="nav-link" href="CarrinhoCompra">
+                <span class="oi oi-cart" aria-hidden="true"></span>&nbsp;Carrinho(<b>@carrinhoCompraItemContador</b>)
+            </NavLink>
+        </div>*@
+
+@code {
+    private bool collapseNavMenu = true;
+    private int carrinhoCompraItemContador = 0;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        carrinhoCompraService.OnCarrinhoCompraChanged += CarrinhoCompraChanged;
+    }
+    protected void CarrinhoCompraChanged(int totalQuantidade)
+    {
+        carrinhoCompraItemContador = totalQuantidade;
+        StateHasChanged();
+    }
+    void IDisposable.Dispose()
+    {
+        carrinhoCompraService.OnCarrinhoCompraChanged -= CarrinhoCompraChanged;
+    }
+}
